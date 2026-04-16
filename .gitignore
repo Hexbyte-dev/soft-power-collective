@@ -1,0 +1,9 @@
+*.log
+.DS_Store
+.env
+.env.local
+.idea/
+.superpowers/
+.vscode/
+node_modules/
+npm-debug.log

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect — The Soft Power Collective</title>
+    <meta name="description" content="Get in touch with Casey Lynn and The Soft Power Collective. Inquire about intimacy coaching, peer circles, mentor pairings, or upcoming workshops.">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        .contact-form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            color: var(--charcoal);
+        }
+        .contact-form input,
+        .contact-form select,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 1px solid rgba(181,185,154,0.5);
+            border-radius: 6px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--charcoal);
+            background: var(--white);
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+        }
+        .contact-form input:focus,
+        .contact-form select:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--terracotta);
+            box-shadow: 0 0 0 3px rgba(160,82,45,0.1);
+        }
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .contact-form select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233B3A30' d='M 1 4 L 6 9 L 11 4'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 2.5rem;
+        }
+        .contact-info-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2.5rem;
+            border: 1px solid rgba(181,185,154,0.3);
+        }
+        .contact-info-item {
+            margin-bottom: 2rem;
+        }
+        .contact-info-item:last-child {
+            margin-bottom: 0;
+        }
+        .contact-info-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--terracotta);
+        }
+        .faq-item {
+            border-bottom: 1px solid rgba(181,185,154,0.3);
+        }
+        .faq-item summary {
+            padding: 1.5rem 0;
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--charcoal);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+        .faq-item summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--terracotta);
+            font-weight: 300;
+            transition: transform 0.3s;
+        }
+        .faq-item[open] summary::after {
+            content: '−';
+        }
+        .faq-item p {
+            padding-bottom: 1.5rem;
+            color: rgba(59,58,48,0.8);
+            line-height: 1.8;
+        }
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <a href="index.html">The Soft Power Collective</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="programs.html" class="nav-link">Programs</a></li>
+                <li><a href="bookclub.html" class="nav-link">Book Club</a></li>
+                <li><a href="collective.html" class="nav-link">The Collective</a></li>
+                <li><a href="contact.html" class="nav-link">Connect</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header" style="background-color: var(--sage-green); padding-top: 140px; padding-bottom: 60px; text-align: center;">
+        <div class="container">
+            <h1>Connect</h1>
+            <p style="font-family: var(--font-accent); font-style: italic; font-size: 1.2rem; color: rgba(59,58,48,0.8);">We'd love to hear from you</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section style="background-color: var(--cream);">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div>
+                    <h2 style="margin-bottom: 2rem;">Send a Message</h2>
+                    <form class="contact-form" onsubmit="event.preventDefault(); alert('Thank you for reaching out! We\'ll be in touch soon.'); this.reset();">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your name" required>
+
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+
+                        <label for="inquiry">Inquiry Type</label>
+                        <select id="inquiry" name="inquiry">
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="coaching-1to1">Working with Casey (individual coaching)</option>
+                            <option value="general">General Question</option>
+                            <option value="coaching">Coaching Circles</option>
+                            <option value="mentorship">Mentorship</option>
+                            <option value="events">Workshops / Events</option>
+                            <option value="pricing">Pricing & Program Fit</option>
+                            <option value="other">Other</option>
+                        </select>
+
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Tell us what's on your mind..." required></textarea>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <div class="contact-info-card">
+                        <div class="contact-info-item">
+                            <h3>Email</h3>
+                            <p style="margin: 0;"><a href="mailto:thesoftpowercollective@gmail.com">thesoftpowercollective@gmail.com</a></p>
+                        </div>
+                        <div class="contact-info-item">
+                            <h3>Instagram</h3>
+                            <p style="margin: 0;"><a href="https://instagram.com/thesoftpowercollective" target="_blank" rel="noopener noreferrer">@thesoftpowercollective</a></p>
+                        </div>
+                        <div class="contact-info-item">
+                            <h3>Response Time</h3>
+                            <p style="margin: 0; color: rgba(59,58,48,0.7);">We typically respond within 48 hours. Your message is important to us, and your privacy is always respected.</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem; padding: 2rem; background: rgba(181,185,154,0.15); border-radius: 8px; text-align: center;">
+                        <p style="font-family: var(--font-accent); font-style: italic; font-size: 1.1rem; color: var(--charcoal); margin: 0;">"Reaching out is an act of courage. We see you."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section style="background-color: var(--white);">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <details class="faq-item">
+                    <summary>Who is this community for?</summary>
+                    <p>Anyone exploring intimacy, power dynamics, embodiment, or relationships — whether you've been in these spaces for years or you're just starting to ask questions. Curiosity is enough. You don't need a label to belong here.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>What does working with Casey look like?</summary>
+                    <p>Individual coaching with Casey is a confidential, one-on-one coaching relationship focused on your intimate, relational, and emotional life. The work draws on trauma-informed practice, nervous system education, and embodied study. Sessions are a mix of honest conversation, skill-building, and holding space for what comes up between. Whether you're untangling a relationship, exploring embodiment or non-monogamy for the first time, or looking for a grounded thinking partner, coaching meets you where you are. Specifics — session length, pacing, and what a package looks like — are worked out in your first conversation.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Is everything confidential?</summary>
+                    <p>Absolutely. Privacy and discretion are foundational to everything we do. What's shared in our circles, mentorship sessions, and events stays there. We take this seriously because trust is the bedrock of the work we do together.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>I'm brand new to all of this. Will I feel out of place?</summary>
+                    <p>This space was built for you. Whether you're just asking the first question or you've been at this a while, you'll find a welcoming community here. We don't expect anyone to have it all figured out — that's the whole point. Come as you are.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>How much does it cost?</summary>
+                    <p>Pricing fits where you are — Casey's individual coaching, peer circles, and mentor pairings are priced differently, and we'll walk through what makes sense. Reach out through the form above or email us directly. An honest first conversation. No pressure either way.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" style="background-color: var(--charcoal);">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>The Soft Power Collective</h4>
+                    <p>There is empowerment in growth, and growth in empowerment.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="bookclub.html">Book Club</a></li>
+                        <li><a href="collective.html">The Collective</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="contact.html">Work With Casey</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Connect</h4>
+                    <p><a href="mailto:thesoftpowercollective@gmail.com">thesoftpowercollective@gmail.com</a></p>
+                    <div class="social-links">
+                        <a href="https://instagram.com/thesoftpowercollective" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                            <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                <circle cx="16.5" cy="7.5" r="1" fill="currentColor"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 The Soft Power Collective. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

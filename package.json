@@ -1,0 +1,26 @@
+{
+  "name": "soft-power-collective",
+  "version": "1.0.0",
+  "description": "The Soft Power Collective — A gentle space for bold exploration.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0"
+  },
+  "keywords": [
+    "soft-power-collective",
+    "community",
+    "website"
+  ],
+  "author": "The Soft Power Collective",
+  "license": "UNLICENSED"
+}
