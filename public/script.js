@@ -98,7 +98,6 @@ window.addEventListener('scroll', function() {
 
 // ============================================
 // Email signup — AJAX POST to our /api/subscribe proxy.
-// The server forwards the email to Kit using the API key in KIT_API_KEY.
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -106,19 +105,18 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            const emailInput = form.querySelector('input[type="email"]');
-            const email = (emailInput && emailInput.value || '').trim();
+            var emailInput = form.querySelector('input[type="email"]');
+            var email = (emailInput && emailInput.value || '').trim();
             if (!email) return;
 
-            const sourceInput = form.querySelector('input[name="fields[source]"]');
-            const source = sourceInput ? sourceInput.value : '';
+            var sourceInput = form.querySelector('input[name="fields[source]"]');
+            var source = sourceInput ? sourceInput.value : '';
 
-            // Optimistic UI — show thanks state immediately
             form.classList.remove('error');
             form.classList.add('submitted');
 
             try {
-                const resp = await fetch('/api/subscribe', {
+                var resp = await fetch('/api/subscribe', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email_address: email, source: source }),
@@ -127,13 +125,51 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!resp.ok) {
                     form.classList.remove('submitted');
                     form.classList.add('error');
-                    console.error('Subscribe failed with status', resp.status);
                 }
             } catch (err) {
                 form.classList.remove('submitted');
                 form.classList.add('error');
-                console.error('Subscribe error:', err);
             }
         });
+    });
+});
+
+// ============================================
+// Contact form — AJAX POST to /api/contact.
+// Submissions logged to Railway + sender added to Kit as "contact-form".
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    var contactForm = document.querySelector('.contact-form');
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        var name = contactForm.querySelector('#name').value.trim();
+        var email = contactForm.querySelector('#email').value.trim();
+        var inquiry = contactForm.querySelector('#inquiry').value;
+        var message = contactForm.querySelector('#message').value.trim();
+
+        if (!name || !email || !message) return;
+
+        contactForm.classList.remove('error');
+        contactForm.classList.add('submitted');
+
+        try {
+            var resp = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, email: email, inquiry: inquiry, message: message }),
+            });
+
+            if (!resp.ok) {
+                contactForm.classList.remove('submitted');
+                contactForm.classList.add('error');
+            }
+        } catch (err) {
+            contactForm.classList.remove('submitted');
+            contactForm.classList.add('error');
+        }
     });
 });

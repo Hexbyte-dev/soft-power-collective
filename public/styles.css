@@ -659,6 +659,25 @@ section {
     text-align: center;
 }
 
+.contact-form.submitted label,
+.contact-form.submitted input,
+.contact-form.submitted select,
+.contact-form.submitted textarea,
+.contact-form.submitted button {
+    display: none;
+}
+
+.contact-form.submitted::after {
+    content: "✓ Thank you for reaching out. We'll be in touch soon.";
+    display: block;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--terracotta);
+    text-align: center;
+    padding: 3rem 0;
+}
+
 .form-group {
     display: flex;
     gap: var(--spacing-sm);
@@ -783,6 +802,9 @@ section {
         grid-template-columns: 1fr;
         gap: var(--spacing-xl);
     }
+
+    #coaching .container > div { grid-template-columns: 1fr !important; }
+    #mentorship .cards-grid, #events .cards-grid { grid-template-columns: 1fr !important; }
 }
 
 /* ============================================
