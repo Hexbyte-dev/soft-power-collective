@@ -9,6 +9,7 @@ Read this before writing or editing any copy for thesoftpowercollective.com.
 3. **Avoid "not this, but that" constructions**, especially as sentence openers or standalone statements. Say what something IS.
 4. First person where Casey is speaking, full sentences, warm and direct. Pull language from her own documents (Threshold Framework, Vision doc, Rate Study) rather than inventing coach-speak.
 5. Keep en-dashes in ranges (1–10) — those are fine.
+6. **Metaphor must be followed by something concrete.** Threshold/crossing language is fine as long as the very next beat is something tangible you could invoice for (structure, honest feedback, a written review, a raise number). This keeps the copy on the line between life coaching and business coaching without tipping into "woo woo." Example: not "holding the framework steady while they cross" but "giving them the structure, the honest feedback, and the belief they needed to get across."
 
 ## Brand rules (July 2026 pivot — Threshold coaching)
 
