@@ -2,6 +2,10 @@
 
 Read this before writing or editing any copy for thesoftpowercollective.com.
 
+## Casey's copy is verbatim (highest priority rule)
+
+When Casey supplies copy, use it word for word. Fix only objective errors: spelling, missing punctuation, stray characters, and "&" spelled out. Do NOT reword, reorder, drop words, or add connectives, even small ones. If a genuine improvement seems worth suggesting, apply her text verbatim first, then list the suggestion separately for her yes or no. Her voice comes first, always.
+
 ## Writing style (Casey's voice — always apply)
 
 1. **No em-dashes (—) anywhere.** Use commas, colons, semicolons, or parentheses instead. Page titles use "Page | The Soft Power Collective" format. Quote attributions get no dash.
