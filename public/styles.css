@@ -239,7 +239,7 @@ section {
    ============================================ */
 
 .hero {
-    min-height: 100vh;
+    min-height: 82vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -269,6 +269,40 @@ section {
     width: 120px;
     height: 120px;
     margin: 0 auto var(--spacing-xl);
+}
+
+.scroll-cue {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    color: rgba(59, 58, 48, 0.65);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    z-index: 1;
+}
+
+.scroll-cue:hover {
+    color: var(--charcoal);
+}
+
+.scroll-cue svg {
+    animation: cueBounce 2s ease-in-out infinite;
+}
+
+@keyframes cueBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(7px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-cue svg { animation: none; }
 }
 
 .hero-headline {

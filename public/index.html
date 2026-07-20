@@ -41,6 +41,7 @@
     <!-- Section 1A: Hero -->
     <section id="home" class="hero" style="background-color: var(--sage-green);">
         <div class="hero-content">
+            <img class="hero-logo" src="images/spc-monogram.png" alt="The Soft Power Collective monogram" style="border-radius: 50%;">
             <h1 class="hero-headline">The Soft Power Collective</h1>
             <p class="hero-tagline">There is empowerment in growth, and growth in empowerment.</p>
             <p class="hero-secondary">Coaching for the threshold: the space between who you've been and who you're becoming.</p>
@@ -50,10 +51,16 @@
                 <a href="contact.html" class="btn btn-primary">Book a Discovery Call</a>
             </div>
         </div>
+        <a href="#threshold" class="scroll-cue" aria-label="Scroll to learn more">
+            <span>The story below</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 5 9 L 12 16 L 19 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
     </section>
 
     <!-- Section 1B: Introduction -->
-    <section class="intro" style="background-color: var(--cream);">
+    <section id="threshold" class="intro" style="background-color: var(--cream);">
         <div class="container">
             <div class="intro-content">
                 <div class="intro-text">
@@ -160,7 +167,11 @@
         <div class="container">
             <div class="about-casey-content">
                 <div class="about-casey-image">
-                    <img class="portrait-placeholder" src="images/casey-headshot.jpg" alt="Casey Lynn" style="object-fit: cover; aspect-ratio: 3/4;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                        <img src="images/casey-table.jpg" alt="Casey Lynn seated at a table, smiling" style="grid-column: 1 / -1; width: 100%; object-fit: cover; aspect-ratio: 16/10; border-radius: 8px;">
+                        <img src="images/casey-closeup.jpg" alt="Casey Lynn, close portrait" style="width: 100%; object-fit: cover; aspect-ratio: 3/4; border-radius: 8px;">
+                        <img src="images/casey-laugh.jpg" alt="Casey Lynn laughing" style="width: 100%; object-fit: cover; aspect-ratio: 3/4; border-radius: 8px;">
+                    </div>
                 </div>
                 <div class="about-casey-text">
                     <h2>Meet Casey Lynn</h2>
