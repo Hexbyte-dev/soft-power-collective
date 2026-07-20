@@ -15,7 +15,7 @@ Read this before writing or editing any copy for thesoftpowercollective.com.
 
 - SPC is a **threshold coaching** practice (leadership/career crossings). NO intimacy, kink, sexual, non-monogamy, or embodiment language anywhere on the site.
 - Public name: **Casey Lynn**. Tagline kept: "There is empowerment in growth, and growth in empowerment."
-- House sentence: "My expectations are high not because I doubt you, but because I know you can meet them."
+- House sentence: "I set the bar high because I know you'll clear it."
 - **No pricing on the site.** Tiers are named for transformations: The Crossing (3 mo), The Threshold Intensive (6 mo), The Held Framework (12 mo), plus the Deep-Dive Diagnostic and free discovery call.
 - Case studies are **anonymized** (no real names).
 - Palette: lightened sage (#C3C7AB), terracotta (#A8603C), cream (#FAF7F1), charcoal (#3B3A30). Text wordmark, no logo image. Headshot: images/casey-headshot.jpg.
