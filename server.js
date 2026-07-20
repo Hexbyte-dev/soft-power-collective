@@ -14,6 +14,7 @@ const rateLimit = require('express-rate-limit');
 const path = require('path');
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const KIT_API_KEY = process.env.KIT_API_KEY;
@@ -47,8 +48,8 @@ app.use(
 );
 
 app.use(compression());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // ============================================
 // Rate limiters
@@ -130,6 +131,15 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
     return res.status(400).json({ error: 'Name, email, and message are required' });
   }
 
+  if (
+    typeof name !== 'string' || name.length > 200 ||
+    typeof email !== 'string' || email.length > 254 ||
+    typeof message !== 'string' || message.length > 5000 ||
+    (inquiry && (typeof inquiry !== 'string' || inquiry.length > 100))
+  ) {
+    return res.status(400).json({ error: 'Input too long' });
+  }
+
   if (!EMAIL_RE.test(email)) {
     return res.status(400).json({ error: 'Valid email required' });
   }
@@ -177,6 +187,9 @@ app.use(
 
 app.get('/:page', (req, res, next) => {
   const page = req.params.page;
+  if (!/^[a-z0-9-]+$/i.test(page)) {
+    return next();
+  }
   const file = path.join(PUBLIC_DIR, `${page}.html`);
   res.sendFile(file, (err) => {
     if (err) next();

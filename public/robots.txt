@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /quiz.html
+
+Sitemap: https://www.thesoftpowercollective.com/sitemap.xml
