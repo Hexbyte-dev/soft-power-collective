@@ -240,6 +240,7 @@ section {
 
 .hero {
     min-height: 82vh;
+    padding-bottom: 6rem;
     display: flex;
     align-items: center;
     justify-content: center;
