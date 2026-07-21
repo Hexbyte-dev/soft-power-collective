@@ -7,17 +7,36 @@ document.addEventListener('DOMContentLoaded', function() {
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
 
+    if (!hamburger || !navMenu) return;
+
+    hamburger.setAttribute('role', 'button');
+    hamburger.setAttribute('tabindex', '0');
+    hamburger.setAttribute('aria-label', 'Menu');
+    hamburger.setAttribute('aria-expanded', 'false');
+
+    function setMenu(open) {
+        hamburger.classList.toggle('active', open);
+        navMenu.classList.toggle('active', open);
+        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
     // Toggle hamburger menu
-    hamburger.addEventListener('click', function() {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
+    hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        setMenu(!navMenu.classList.contains('active'));
     });
 
-    // Close menu when a link is clicked
+    hamburger.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setMenu(!navMenu.classList.contains('active'));
+        }
+    });
+
+    // Close menu when a link is tapped, without blocking navigation
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
+            setMenu(false);
         });
     });
 
@@ -27,8 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const isClickOnHamburger = hamburger.contains(event.target);
 
         if (!isClickInsideNav && !isClickOnHamburger && navMenu.classList.contains('active')) {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
+            setMenu(false);
         }
     });
 });
@@ -65,12 +83,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-
         const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
+        if (!targetId || targetId === '#') return;
+
+        let targetElement = null;
+        try {
+            targetElement = document.querySelector(targetId);
+        } catch (err) {
+            return;
+        }
 
         if (targetElement) {
+            e.preventDefault();
             const headerOffset = 80; // Account for fixed navbar
             const elementPosition = targetElement.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
