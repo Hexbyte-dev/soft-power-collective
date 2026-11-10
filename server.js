@@ -2,7 +2,8 @@
 // The Soft Power Collective — Static Site Server
 // ============================================
 // Serves the static site, proxies email signups to Kit, and receives
-// contact form submissions (logged to stdout for Railway visibility).
+// contact form submissions (emailed to Casey through Resend, with a copy
+// logged to stdout as a backup in Railway logs).
 // ============================================
 
 require('dotenv').config();
@@ -19,6 +20,14 @@ const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const KIT_API_KEY = process.env.KIT_API_KEY;
 const KIT_FORM_ID = process.env.KIT_FORM_ID || '9335347';
+
+// Contact form notifications (Resend). All three are set in Railway.
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL;
+const CONTACT_FROM_EMAIL =
+  process.env.CONTACT_FROM_EMAIL ||
+  'The Soft Power Collective <onboarding@resend.dev>';
+const CONTACT_EMAIL_READY = Boolean(RESEND_API_KEY && CONTACT_TO_EMAIL);
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const VALID_SOURCES = [
@@ -120,9 +129,57 @@ app.post('/api/subscribe', subscribeLimiter, async (req, res) => {
 });
 
 // ============================================
+// Contact form notification email
+// Sends the full submission to Casey's inbox. Reply-To is the sender,
+// so replying to the notification replies straight to the person.
+// Returns true when Resend accepted the email.
+// ============================================
+async function sendContactEmail({ name, email, inquiry, message, time }) {
+  if (!CONTACT_EMAIL_READY) return false;
+
+  const oneLine = (value) => String(value).replace(/[\r\n]+/g, ' ').trim();
+  const topic = inquiry ? oneLine(inquiry) : 'not specified';
+
+  const resp = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: CONTACT_FROM_EMAIL,
+      to: [CONTACT_TO_EMAIL],
+      reply_to: email,
+      subject: `New website message from ${oneLine(name)}`,
+      text: [
+        'Someone filled out the contact form on thesoftpowercollective.com.',
+        '',
+        `Name: ${oneLine(name)}`,
+        `Email: ${email}`,
+        `Inquiry: ${topic}`,
+        `Received: ${time}`,
+        '',
+        'Message:',
+        message,
+        '',
+        'Reply to this email to answer them directly.',
+      ].join('\n'),
+    }),
+    signal: AbortSignal.timeout(8000),
+  });
+
+  if (!resp.ok) {
+    const detail = await resp.text().catch(() => '');
+    throw new Error(`Resend responded ${resp.status}: ${detail.slice(0, 300)}`);
+  }
+  return true;
+}
+
+// ============================================
 // Contact form endpoint
-// Logs submissions to stdout (visible in Railway logs) and subscribes
-// the sender to Kit with source "contact-form" so Casey sees them.
+// Emails the submission to Casey, subscribes the sender to Kit with
+// source "contact-form", and logs a copy to stdout (Railway logs) so
+// nothing is lost if the email fails.
 // ============================================
 app.post('/api/contact', contactLimiter, async (req, res) => {
   const { name, email, inquiry, message } = req.body;
@@ -144,33 +201,50 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
     return res.status(400).json({ error: 'Valid email required' });
   }
 
+  const time = new Date().toISOString();
+
   console.log('--- CONTACT FORM SUBMISSION ---');
   console.log('Name:', name);
   console.log('Email:', email);
   console.log('Inquiry:', inquiry || 'not specified');
   console.log('Message:', message);
-  console.log('Time:', new Date().toISOString());
+  console.log('Time:', time);
   console.log('------------------------------');
 
-  if (KIT_API_KEY) {
-    try {
-      await fetch(
-        `https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            api_key: KIT_API_KEY,
-            email,
-            first_name: name,
-            fields: { source: 'contact-form' },
-          }),
-        }
+  const notify = sendContactEmail({ name, email, inquiry, message, time })
+    .then((sent) => {
+      if (sent) {
+        console.log('Contact notification emailed to inbox.');
+      } else {
+        console.warn(
+          'CONTACT EMAIL NOT SENT: RESEND_API_KEY or CONTACT_TO_EMAIL is not set. The message above exists only in these logs.'
+        );
+      }
+    })
+    .catch((err) => {
+      console.error(
+        'CONTACT EMAIL FAILED. The message above exists only in these logs.',
+        err.message
       );
-    } catch (err) {
-      console.error('Kit subscribe from contact form failed:', err);
-    }
-  }
+    });
+
+  const kit = KIT_API_KEY
+    ? fetch(`https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          api_key: KIT_API_KEY,
+          email,
+          first_name: name,
+          fields: { source: 'contact-form' },
+        }),
+        signal: AbortSignal.timeout(8000),
+      }).catch((err) => {
+        console.error('Kit subscribe from contact form failed:', err);
+      })
+    : Promise.resolve();
+
+  await Promise.all([notify, kit]);
 
   return res.json({ success: true });
 });
@@ -206,6 +280,11 @@ app.listen(PORT, () => {
   if (!KIT_API_KEY) {
     console.warn(
       '   ⚠️  KIT_API_KEY not set — email signups will return 500 until you configure it.\n'
+    );
+  }
+  if (!CONTACT_EMAIL_READY) {
+    console.warn(
+      '   ⚠️  RESEND_API_KEY or CONTACT_TO_EMAIL not set. Contact form messages will only be written to these logs.\n'
     );
   }
 });
